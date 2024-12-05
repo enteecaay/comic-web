@@ -29,6 +29,7 @@ const ComicCard: React.FC<ComicCardProps> = ({
             className="object-cover rounded-md flex-1"
             src={thumbnail}
             alt={slug}
+            loading="lazy"
           />
           <h2 className="flex text-center font-bold mt-2">{name}</h2>
           <p className="flex font-light text-xs">
