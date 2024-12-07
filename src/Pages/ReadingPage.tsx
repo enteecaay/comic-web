@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
-import { Button, Divider, Dropdown, Menu, Space, theme } from "antd";
-import type { MenuProps } from "antd";
+import { Button, Divider, Dropdown, Space, theme } from "antd";
 import Comic from "../Components/Comic";
 
 interface ReadingPageProps {

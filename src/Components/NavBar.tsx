@@ -2,9 +2,8 @@ import React from "react";
 import { getGenres } from "../api/ComicApi";
 import { Link } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
-import { Button, Divider, Dropdown, Menu, Space, theme } from "antd";
+import { Divider, Dropdown, Space, theme } from "antd";
 import type { MenuProps } from "antd";
-import Search from "antd/es/transfer/search";
 
 const NavBar = () => {
   const [genres, setGenres] = React.useState<any>([]);
@@ -50,7 +49,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <nav className="w-screen min-w-full flex justify-between items-center p-4 bg-gray-800 text-white shadow-xl shadow-gray-700">
+      <nav className="w-screen min-w-full flex flex-wrap justify-between items-center p-4 bg-gray-800 text-white shadow-xl shadow-gray-700">
         <div className="text-2xl font-bold ml-48">Comic Web</div>
         <div className="flex space-x-4 text-xl font-semibold mr-[40rem]">
           <a
