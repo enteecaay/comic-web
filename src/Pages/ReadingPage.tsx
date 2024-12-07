@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import { Button, Divider, Dropdown, Menu, Space, theme } from "antd";
 import type { MenuProps } from "antd";
+import Comic from "../Components/Comic";
 
 interface ReadingPageProps {
   chapter_api_data: string;
@@ -15,44 +16,58 @@ const ReadingPage: React.FC = () => {
   const { chapter_api_data, chapterList, name } =
     location.state as ReadingPageProps;
   const { token } = theme.useToken();
+  const [baseUrl, setBaseUrl] = React.useState<string>("");
+  const [comicName, setComicName] = React.useState<string>("");
+  const [selectedChapter, setSelectedChapter] = useState<any[]>([]);
+
+  const fetchData = async (chapter_api_data: string) => {
+    const response = await fetch(chapter_api_data);
+    const data = await response.json();
+    console.log("data", data.data.item.chapter_path);
+    setBaseUrl(`${data.data.domain_cdn}/${data.data.item.chapter_path}/`);
+    setComicName(
+      `${data.data.item.comic_name} - Chapter ${data.data.item.chapter_name}`
+    );
+    console.log("comicName", comicName);
+    console.log("baseUrl", baseUrl);
+  };
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(chapter_api_data);
-      const data = await response.json();
-      console.log("data", data.data.domain_cdn);
-    };
-    fetchData();
-    console.log("chapter_api_data", chapter_api_data);
-    console.log("chapterList", chapterList);
-    console.log("name", name);
-  }, [chapter_api_data, chapterList, name]);
+    fetchData(chapter_api_data);
+  }, []);
 
-  const items: MenuProps["items"] = chapterList.map(
-    (chapter: any, index: number) => ({
-      key: index,
-      label: (
-        <Link
-          to="#"
-          state={{ chapter_api_data: chapter.server_data, chapterList, name }}
-          className="text-gray-200 text-pretty hover:font-bold"
-        >
-          {chapter.title
-            ? chapter.chapter_name + chapter.title
-            : `Chapter ${chapter.chapter_name}`}
-        </Link>
-      ),
-    })
-  );
+  const items = chapterList.map((chapter: any, index: number) => ({
+    key: index,
+    label: (
+      <div
+        onClick={() => handleChapterSelect(chapter.chapter_api_data)}
+        className="text-black text-pretty hover:font-bold"
+      >
+        {chapter.title
+          ? chapter.chapter_name + chapter.title
+          : `Chapter ${chapter.chapter_name}`}
+      </div>
+    ),
+  }));
 
   const contentStyle: React.CSSProperties = {
-    backgroundColor: token.colorBgElevated,
+    backgroundColor: token.colorBgBase,
     borderRadius: token.borderRadiusLG,
     boxShadow: token.boxShadowSecondary,
   };
 
   const menuStyle: React.CSSProperties = {
     boxShadow: "none",
+  };
+
+  const handleChapterSelect = async (chapterUrl: string) => {
+    const response = await fetch(chapterUrl);
+    const data = await response.json();
+    setSelectedChapter(data.data.item.chapter_image);
+    setBaseUrl(`${data.data.domain_cdn}/${data.data.item.chapter_path}/`);
+    setComicName(
+      `${data.data.item.comic_name} - Chapter ${data.data.item.chapter_name}`
+    );
   };
 
   return (
@@ -77,8 +92,19 @@ const ReadingPage: React.FC = () => {
         </Dropdown>
       </div>
       <div className="flex justify-center mt-8">
-        <div className="w-10/12 bg-white">
-          <Outlet />
+        <div className="w-10/12 flex flex-col justify-center">
+          <div className="w-full">
+            {comicName && (
+              <h3 className="text-xl font-medium mb-4 text-center">
+                {comicName}
+              </h3>
+            )}
+          </div>
+          <div className="w-full flex justify-center">
+            {selectedChapter.length > 0 && (
+              <Comic baseUrl={baseUrl} chapterData={selectedChapter} />
+            )}
+          </div>
         </div>
       </div>
     </div>

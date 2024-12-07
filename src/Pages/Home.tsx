@@ -74,6 +74,9 @@ const Home = () => {
       <div className="w-11/12 flex flex-col justify-center">
         <div className="w-full flex flex-col justify-center items-center">
           <div className="carousel-container w-full shadow-inner shadow-slate-500 p-10 rounded-2xl mb-10">
+            <h1 className="text-4xl font-semibold text-center mb-8">
+              Popular Comics
+            </h1>
             <Slider {...settings}>
               {homeData?.items?.map((comic: any) => (
                 <ComicCard
