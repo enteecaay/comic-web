@@ -1,15 +1,20 @@
+import React from "react";
+import { Outlet } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import Home from "./Pages/Home";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
-    <div>
-      <div className="w-screen min-w-full flex justify-center items-start">
+    <div className="flex flex-col min-h-screen">
+      <header className="w-full">
         <NavBar />
-      </div>
-      <div>
-        <Home />
-      </div>
+      </header>
+      <main className="flex-grow overflow-x-hidden">
+        <Outlet />
+      </main>
+      <footer className="w-full">
+        <Footer />
+      </footer>
     </div>
   );
 }

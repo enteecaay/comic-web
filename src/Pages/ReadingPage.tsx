@@ -91,7 +91,7 @@ const ReadingPage: React.FC = () => {
         </Dropdown>
       </div>
       <div className="flex justify-center mt-8">
-        <div className="w-10/12 flex flex-col justify-center">
+        <div className="w-6/12 flex flex-col justify-center">
           <div className="w-full">
             {comicName && (
               <h3 className="text-xl font-medium mb-4 text-center">

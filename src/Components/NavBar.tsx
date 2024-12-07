@@ -27,7 +27,7 @@ const NavBar = () => {
     key: index,
     label: (
       <Link
-        to={genre.slug}
+        to={`/genre/${genre.slug}`}
         state={{ genre: genre.genre_name }}
         className="text-gray-200 text-pretty text-lg hover:font-bold"
       >
@@ -50,8 +50,10 @@ const NavBar = () => {
   return (
     <div>
       <nav className="w-screen min-w-full flex flex-wrap justify-between items-center p-4 bg-gray-800 text-white shadow-xl shadow-gray-700">
-        <div className="text-2xl font-bold ml-48">Comic Web</div>
-        <div className="flex space-x-4 text-xl font-semibold mr-[40rem]">
+        <div className="text-2xl font-bold ml-48">
+          <a href="/">Comic Web</a>
+        </div>
+        <div className="flex space-x-4 text-xl font-semibold mr-[36rem]">
           <a
             href="/"
             className="rounded-xl w-32 h-12 flex justify-center items-center hover:bg-white hover:text-black"
@@ -98,11 +100,6 @@ const NavBar = () => {
               />
             </svg>
           </div>
-        </div>
-        <div className="mr-48">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Login
-          </button>
         </div>
       </nav>
     </div>

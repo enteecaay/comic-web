@@ -27,4 +27,15 @@ const getGenres = async () => {
   }
 };
 
-export { getHomeComicList, getComicDetail, getGenres };
+const getComicByGenre = async (slug: string, page: number) => {
+  try {
+    const response = await axiosInstance.get(`the-loai/${slug}`, {
+      params: { page },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { getHomeComicList, getComicDetail, getGenres, getComicByGenre };

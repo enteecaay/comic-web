@@ -107,7 +107,7 @@ const ComicDetail = () => {
           {comicDetail.description}
         </div>
       </div>
-      <div className="w-full flex flex-col justify-center items-center sm:mt-10 xs:mt-10 md:mt-10">
+      <div className="w-full flex flex-col items-center sm:mt-10 xs:mt-10 md:mt-10">
         <h1 className="text-3xl text-white font-serif font-bold mb-4">
           Chapter List
         </h1>
