@@ -31,13 +31,15 @@ const ComicCard: React.FC<ComicCardProps> = ({
             alt={slug}
             loading="lazy"
           />
-          <h2 className="flex text-center font-bold mt-2">{name}</h2>
+          <h2 className="flex text-center font-bold mt-2 text-xs lg:text-base">
+            {name}
+          </h2>
           <p className="flex font-light text-xs">
             <strong>Status: </strong>
             {status}
           </p>
 
-          <div className="flex flex-wrap mt-2 mb-2 ">
+          <div className="lg:flex flex-wrap mt-2 mb-2 hidden">
             {category.map((item: any) => (
               <div
                 className="flex justify-center items-center rounded-3xl bg-blue-400 m-1 p-1 "

@@ -30,20 +30,23 @@ const GenrePage = () => {
 
   return (
     <div>
-      <div className="w-full grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
-        {/* Add comic list here */}
-        {genreData?.items?.map((comic: any, index: number) => (
-          <ComicCard
-            key={comic.index}
-            id={comic.id}
-            name={comic.name}
-            slug={comic.slug}
-            thumbnail={baseThumbnail + comic.thumb_url}
-            status={comic.status}
-            category={comic.category}
-          />
-        ))}
+      <div className="w-full flex justify-center mt-10">
+        <div className="w-8/12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2">
+          {/* Add comic list here */}
+          {genreData?.items?.map((comic: any) => (
+            <ComicCard
+              key={comic.index}
+              id={comic.id}
+              name={comic.name}
+              slug={comic.slug}
+              thumbnail={baseThumbnail + comic.thumb_url}
+              status={comic.status}
+              category={comic.category}
+            />
+          ))}
+        </div>
       </div>
+
       <div className="w-full flex justify-center mt-10"></div>
       {pagination.pageRanges > 1 && (
         <div className="w-full flex justify-center space-x-5 mt-4 mb-4">

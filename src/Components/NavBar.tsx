@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { getGenres } from "../api/ComicApi";
 import { Link } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import { Divider, Dropdown, Space, theme } from "antd";
 import type { MenuProps } from "antd";
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
   const [genres, setGenres] = React.useState<any>([]);
   const { token } = theme.useToken();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   React.useEffect(() => {
     const fetchGenres = async () => {
@@ -47,13 +48,17 @@ const NavBar = () => {
     maxHeight: "50vh",
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div>
-      <nav className="w-screen min-w-full flex flex-wrap justify-between items-center p-4 bg-gray-800 text-white shadow-xl shadow-gray-700">
-        <div className="text-2xl font-bold ml-48">
+      <nav className="w-screen min-w-full lg:flex flex-wrap justify-between items-center py-4 bg-gray-800 text-white shadow-xl shadow-gray-700 lg:flex-row">
+        <div className="text-2xl font-bold ml-48 hidden lg:block">
           <a href="/">Comic Web</a>
         </div>
-        <div className="flex space-x-4 text-xl font-semibold mr-[36rem]">
+        <div className="hidden space-x-4 text-xl font-semibold mr-[50rem] lg:flex">
           <a
             href="/"
             className="rounded-xl w-32 h-12 flex justify-center items-center hover:bg-white hover:text-black"
@@ -79,29 +84,50 @@ const NavBar = () => {
               Genres <DownOutlined />
             </button>
           </Dropdown>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              className="rounded-xl w-[20rem] h-12 pl-10 flex items-center font-normal"
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
-          </div>
         </div>
+        <button className="md:hidden" onClick={toggleSidebar}>
+          <span className="text-2xl">&#9776;</span>
+        </button>
       </nav>
+      <div
+        className={`fixed top-0 left-0 z-50 w-full h-full bg-gray-800 text-white transform ${
+          isSidebarOpen ? "translate-x-0 " : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out md:hidden`}
+      >
+        <button
+          className="absolute top-4 right-4 text-2xl"
+          onClick={toggleSidebar}
+        >
+          &times;
+        </button>
+        <div className="flex flex-col space-y-4 mt-16">
+          <a
+            href="/"
+            className="rounded-xl w-full h-12 flex justify-center items-center hover:bg-white hover:text-black"
+          >
+            Home
+          </a>
+          <button className="rounded-xl w-full h-12 flex justify-center items-center hover:bg-white hover:text-black bg-transparent">
+            Category
+          </button>
+          <Dropdown
+            menu={{ items }}
+            dropdownRender={(menu) => (
+              <div style={contentStyle}>
+                {React.cloneElement(menu as React.ReactElement, {
+                  style: menuStyle,
+                })}
+                <Divider style={{ margin: 0 }} />
+                <Space style={{ padding: 8 }} />
+              </div>
+            )}
+          >
+            <button className="rounded-xl w-full h-12 flex justify-center items-center hover:bg-white hover:text-black bg-transparent">
+              Genres <DownOutlined />
+            </button>
+          </Dropdown>
+        </div>
+      </div>
     </div>
   );
 };
