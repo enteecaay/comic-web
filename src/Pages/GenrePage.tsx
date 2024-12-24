@@ -31,7 +31,7 @@ const GenrePage = () => {
   return (
     <div>
       <div className="w-full flex justify-center mt-10">
-        <div className="w-8/12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2">
+        <div className="w-full max-w-screen-lg lg:w-8/12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-1">
           {/* Add comic list here */}
           {genreData?.items?.map((comic: any) => (
             <ComicCard
@@ -59,6 +59,7 @@ const GenrePage = () => {
                   : "bg-gray-200"
               }`}
               onClick={() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
                 const fetchPage = async (page: number) => {
                   if (slug) {
                     const response = await getComicByGenre(slug, page);

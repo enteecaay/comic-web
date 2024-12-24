@@ -21,7 +21,7 @@ const ComicCard: React.FC<ComicCardProps> = ({
   return (
     <div
       key={id}
-      className="flex flex-col justify-start items-center border-2 rounded-lg shadow-lg shadow-gray-400 m-4 p-4"
+      className="flex flex-col justify-start items-center border-2 rounded-lg shadow-lg shadow-gray-400○○ p-4"
     >
       <a href={`/comic/${slug}`}>
         <div className="w-full flex flex-col top-0 flex-1 object-cover">
@@ -55,7 +55,7 @@ const ComicCard: React.FC<ComicCardProps> = ({
       </a>
       <div className="flex w-full justify-center items-end">
         <Link to={`/comic/${slug}`}>
-          <button className="w-28 h-8 flex justify-center items-center border-white hover:bg-white hover:text-black font-sans text-lg">
+          <button className=" h-4 p-4 flex justify-center items-center border-white hover:bg-white hover:text-black font-sans text-lg">
             Read
           </button>
         </Link>
