@@ -9,7 +9,7 @@ function App() {
       <header className="w-full">
         <NavBar />
       </header>
-      <main className="flex-grow overflow-x-hidden">
+      <main className="w-full bg-gray-900 pb-10">
         <Outlet />
       </main>
       <footer className="w-full">

@@ -26,15 +26,49 @@ const ReadingPage: React.FC = () => {
   const [baseUrl, setBaseUrl] = useState<string>("");
   const [comicName, setComicName] = useState<string>("");
   const [selectedChapter, setSelectedChapter] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedImages, setLoadedImages] = useState<HTMLImageElement[]>([]);
+
+  const preloadImages = async (baseUrl: string, imageData: any[]) => {
+    setIsLoading(true);
+    const loadImage = (src: string): Promise<HTMLImageElement> => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+      });
+    };
+
+    try {
+      const imagePromises = imageData.map((chapter) =>
+        loadImage(`${baseUrl}${chapter.image_file}`)
+      );
+      const loadedImages = await Promise.all(imagePromises);
+      setLoadedImages(loadedImages);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error loading images:", error);
+      setIsLoading(false);
+    }
+  };
 
   const fetchData = async (url: string) => {
-    const response = await fetch(url);
-    const data = await response.json();
-    setBaseUrl(`${data.data.domain_cdn}/${data.data.item.chapter_path}/`);
-    setComicName(
-      `${data.data.item.comic_name} - Chapter ${data.data.item.chapter_name}`
-    );
-    setSelectedChapter(data.data.item.chapter_image);
+    try {
+      setIsLoading(true);
+      const response = await fetch(url);
+      const data = await response.json();
+      const newBaseUrl = `${data.data.domain_cdn}/${data.data.item.chapter_path}/`;
+      setBaseUrl(newBaseUrl);
+      setComicName(
+        `${data.data.item.comic_name} - Chapter ${data.data.item.chapter_name}`
+      );
+      setSelectedChapter(data.data.item.chapter_image);
+      await preloadImages(newBaseUrl, data.data.item.chapter_image);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setIsLoading(false);
+    }
   };
 
   React.useEffect(() => {
@@ -124,8 +158,21 @@ const ReadingPage: React.FC = () => {
             )}
           </div>
           <div className="w-full flex justify-center">
-            {selectedChapter.length > 0 && (
-              <Comic baseUrl={baseUrl} chapterData={selectedChapter} />
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+              </div>
+            ) : (
+              <div className="w-full max-w-screen-xl flex flex-col justify-center">
+                {loadedImages.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img.src}
+                    alt={`Page ${index + 1}`}
+                    className="w-full h-1/2"
+                  />
+                ))}
+              </div>
             )}
           </div>
         </div>

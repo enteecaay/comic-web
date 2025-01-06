@@ -21,20 +21,22 @@ const ComicCard: React.FC<ComicCardProps> = ({
   return (
     <div
       key={id}
-      className="flex flex-col justify-start items-center border-2 rounded-lg shadow-lg shadow-gray-400○○ p-4"
+      className="w-full max-w-sm h-96 flex flex-col justify-start items-center border-2 rounded-lg shadow-lg shadow-gray-400 relative"
     >
       <a href={`/comic/${slug}`}>
-        <div className="w-full flex flex-col top-0 flex-1 object-cover">
+        <div className="w-full h-full flex flex-col absolute top-0 left-0">
           <img
-            className="object-cover rounded-md flex-1"
+            className="w-full h-full rounded-md opacity-65"
             src={thumbnail}
             alt={slug}
             loading="lazy"
           />
-          <h2 className="flex text-center font-bold mt-2 text-xs lg:text-base">
+        </div>
+        <div className="flex flex-col w-full justify-start items-start p-2 absolute top-2/4 left-0">
+          <h2 className="flex text-center font-bold mt-2 text-base lg:text-lg">
             {name}
           </h2>
-          <p className="flex font-light text-xs">
+          <p className="flex font-light text-xs ">
             <strong>Status: </strong>
             {status}
           </p>
@@ -53,7 +55,7 @@ const ComicCard: React.FC<ComicCardProps> = ({
           </div>
         </div>
       </a>
-      <div className="flex w-full justify-center items-end">
+      <div className="flex w-full justify-center items-end absolute bottom-8">
         <Link to={`/comic/${slug}`}>
           <button className=" h-4 p-4 flex justify-center items-center border-white hover:bg-white hover:text-black font-sans text-lg">
             Read

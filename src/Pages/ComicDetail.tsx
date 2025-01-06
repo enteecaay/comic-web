@@ -36,7 +36,7 @@ const ComicDetail = () => {
   }, [slug]);
 
   return (
-    <div className="w-full h-screen grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+    <div className="w-full max-w-full h-full flex flex-wrap lg:flex-nowrap justify-center items-center bg-gray-900">
       <div className="w-full flex flex-col justify-start items-center">
         <div className="w-full mt-4 pr-2 pl-2 mb-4">
           <nav className="text-sm font-light">
@@ -107,7 +107,7 @@ const ComicDetail = () => {
           {comicDetail.description}
         </div>
       </div>
-      <div className="w-full flex flex-col items-center sm:mt-10 xs:mt-10 md:mt-10">
+      <div className="w-full flex flex-col items-center justify-center">
         <h1 className="text-3xl text-white font-serif font-bold mb-4">
           Chapter List
         </h1>
